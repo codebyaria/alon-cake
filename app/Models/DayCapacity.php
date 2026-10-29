@@ -35,7 +35,7 @@ class DayCapacity extends Model
     protected function casts(): array
     {
         return [
-            'date' => 'date',
+            'date' => 'date:Y-m-d',
             'capacity' => 'integer',
             'is_closed' => 'boolean',
         ];

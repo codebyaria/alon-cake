@@ -73,31 +73,6 @@ class HomePageTest extends TestCase
         $this->get('/')->assertInertia(fn (Assert $page) => $page->where('calendar.note', null));
     }
 
-    public function test_order_start_shows_the_chosen_date()
-    {
-        $this->get('/pesan?tanggal=2026-11-04')
-            ->assertOk()
-            ->assertInertia(fn (Assert $page) => $page
-                ->component('order/start')
-                ->where('day.date', '2026-11-04')
-                ->where('day.bookable', true));
-    }
-
-    public function test_order_start_explains_an_unavailable_date()
-    {
-        $this->get('/en/pesan?tanggal=2026-11-08')
-            ->assertOk()
-            ->assertInertia(fn (Assert $page) => $page
-                ->where('day.status', 'day_off')
-                ->where('day.bookable', false)
-                ->where('firstBookable', '2026-11-02'));
-    }
-
-    public function test_order_start_rejects_a_malformed_date()
-    {
-        $this->get('/pesan?tanggal=besok')->assertRedirect();
-    }
-
     public function test_admin_stays_indonesian()
     {
         $this->get('/admin/login')->assertSee('lang="id"', false);

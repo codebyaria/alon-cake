@@ -91,7 +91,7 @@ class Order extends Model
     protected function casts(): array
     {
         return [
-            'pickup_date' => 'date',
+            'pickup_date' => 'date:Y-m-d',
             'time_slot' => TimeSlot::class,
             'stage' => OrderStage::class,
             'fulfillment' => Fulfillment::class,

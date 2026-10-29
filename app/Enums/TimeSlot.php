@@ -21,4 +21,18 @@ enum TimeSlot: string implements HasLabel
             self::Afternoon => '16.00–18.00',
         };
     }
+
+    /**
+     * Start and end as "HH:MM", Asia/Jakarta (used for the calendar file).
+     *
+     * @return array{0: string, 1: string}
+     */
+    public function hours(): array
+    {
+        return match ($this) {
+            self::Morning => ['10:00', '12:00'],
+            self::Midday => ['13:00', '15:00'],
+            self::Afternoon => ['16:00', '18:00'],
+        };
+    }
 }

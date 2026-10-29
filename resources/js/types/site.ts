@@ -25,3 +25,15 @@ export type MenuCake = {
     priceFrom: number;
     photoUrl: string | null;
 };
+
+/** What has been chosen so far in the order flow (OrderFlowController::summary). */
+export type OrderSummary = {
+    date: string;
+    remaining: number;
+    cake: string | null;
+    size: string | null;
+    flavor: string | null;
+    cakeText: string | null;
+    hasCard: boolean;
+    cakePrice: number | null;
+};
