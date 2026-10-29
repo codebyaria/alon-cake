@@ -20,5 +20,10 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin Alon Cake',
             'email' => 'admin@aloncake.test',
         ]);
+
+        $this->call([
+            CatalogSeeder::class,
+            DemoOrderSeeder::class,
+        ]);
     }
 }
