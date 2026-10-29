@@ -11,7 +11,9 @@ void createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
     layout: (name) => {
         switch (true) {
-            case name === 'welcome':
+            // Public pages bring their own SiteLayout.
+            case name === 'home':
+            case name.startsWith('order/'):
             case name === 'playground':
                 return null;
             case name.startsWith('auth/'):

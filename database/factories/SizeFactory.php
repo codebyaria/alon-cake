@@ -18,7 +18,8 @@ class SizeFactory extends Factory
     public function definition(): array
     {
         return [
-            'diameter_cm' => fake()->unique()->numberBetween(10, 30),
+            // Outside the real menu sizes (15/18/20 cm), so factories never clash with the seeded catalog.
+            'diameter_cm' => fake()->unique()->numberBetween(21, 99),
             'servings_min' => 6,
             'servings_max' => 8,
             'price_add' => 0,

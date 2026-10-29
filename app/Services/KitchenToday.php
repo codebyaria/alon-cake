@@ -71,10 +71,11 @@ class KitchenToday
         $handOver = $this->toHandOver()->count();
 
         $parts = array_filter([
-            // Indonesian nouns don't pluralise; lang/en.json can use trans_choice keys later.
-            $decorate > 0 ? __('menghias :count kue', ['count' => $decorate]) : null,
-            $sponges > 0 ? __('memanggang :count sponge', ['count' => $sponges]) : null,
-            $handOver > 0 ? __('menyerahkan :count kue', ['count' => $handOver]) : null,
+            // Indonesian nouns don't pluralise; lang/en.json holds "one|many" forms and
+            // lang/id.json pins these keys so Indonesian never falls back to English.
+            $decorate > 0 ? trans_choice('menghias :count kue', $decorate) : null,
+            $sponges > 0 ? trans_choice('memanggang :count sponge', $sponges) : null,
+            $handOver > 0 ? trans_choice('menyerahkan :count kue', $handOver) : null,
         ]);
 
         if ($parts === []) {

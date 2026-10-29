@@ -1,4 +1,5 @@
 import { useId } from 'react';
+import { useInView } from '@/hooks/use-in-view';
 import { cn } from '@/lib/utils';
 
 type Tone = 'cocoa' | 'rose';
@@ -12,7 +13,7 @@ type PipingLineProps = {
     amplitude?: number;
     strokeWidth?: number;
     tone?: Tone;
-    /** Draw the line in from the left once, on mount. */
+    /** Draw the line in from the left once, when it scrolls into view. */
     reveal?: boolean;
     className?: string;
 };
@@ -50,6 +51,7 @@ export function PipingLine({
     className,
 }: PipingLineProps) {
     const patternId = `piping-${useId().replace(/[^a-zA-Z0-9-]/g, '')}`;
+    const [ref, inView] = useInView<HTMLDivElement>();
     const height = amplitude + strokeWidth * 2 + 2;
 
     const line = (
@@ -82,12 +84,25 @@ export function PipingLine({
 
     return (
         <div
+            ref={ref}
             role="presentation"
             className={cn('w-full overflow-hidden', toneClass[tone], className)}
         >
             {reveal ? (
-                <div className="animate-wipe-outer overflow-hidden">
-                    <div className="animate-wipe-inner">{line}</div>
+                // Hidden off to the side until in view, then wiped in (transform only).
+                <div
+                    className={cn(
+                        'overflow-hidden',
+                        inView ? 'animate-wipe-outer' : '-translate-x-full',
+                    )}
+                >
+                    <div
+                        className={
+                            inView ? 'animate-wipe-inner' : 'translate-x-full'
+                        }
+                    >
+                        {line}
+                    </div>
                 </div>
             ) : (
                 line

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -42,6 +43,19 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'locale' => App::getLocale(),
+            // UI copy is keyed by its Indonesian text, so Indonesian needs no dictionary.
+            'translations' => fn () => App::getLocale() === 'id' ? (object) [] : $this->translations(App::getLocale()),
         ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function translations(string $locale): array
+    {
+        $path = lang_path("{$locale}.json");
+
+        return is_file($path) ? json_decode((string) file_get_contents($path), true) : [];
     }
 }
