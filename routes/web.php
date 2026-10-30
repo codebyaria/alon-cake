@@ -27,10 +27,4 @@ $publicSite = function () {
 Route::group([], $publicSite);
 Route::prefix('en')->name('en.')->group($publicSite);
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'dashboard')->name('dashboard');
-});
-
-require __DIR__.'/settings.php';
-
 Route::inertia('playground', 'playground')->name('playground');
