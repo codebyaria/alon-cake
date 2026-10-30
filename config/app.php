@@ -30,6 +30,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Live Demo
+    |--------------------------------------------------------------------------
+    |
+    | The public demo reseeds itself every night, so it must be allowed to
+    | run migrate:fresh even in production. Leave off anywhere else.
+    |
+    */
+
+    'demo' => (bool) env('APP_DEMO', false),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Debug Mode
     |--------------------------------------------------------------------------
     |

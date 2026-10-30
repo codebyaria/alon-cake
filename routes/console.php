@@ -12,4 +12,5 @@ Artisan::command('inspire', function () {
 Schedule::command('migrate:fresh --seed --force')
     ->dailyAt('03:00')
     ->timezone('Asia/Jakarta')
-    ->environments('production');
+    ->environments('production')
+    ->when(fn () => config('app.demo'));
