@@ -5,6 +5,8 @@ Filosofinya sederhana: momen penting layak ditunggu.
 
 Ini proyek konsep untuk portofolio [Ari Zain](https://github.com/codebyaria). Bukan toko sungguhan: pembayaran disimulasikan, pesan WhatsApp hanya pratinjau, dan semua data berasal dari seeder.
 
+**Demo:** https://aloncake.arizain.my.id (data diulang setiap malam pukul 03.00 WIB)
+
 ## Yang bisa dicoba
 
 - **Beranda** (`/`, `/en`): baris "Hari ini di dapur" yang dihitung dari pesanan sungguhan, kue yang tersusun lapis demi lapis saat di-scroll, dan kalender ketersediaan dua minggu ke depan.
