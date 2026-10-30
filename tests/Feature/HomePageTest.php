@@ -50,6 +50,18 @@ class HomePageTest extends TestCase
         }
     }
 
+    public function test_link_previews_and_language_alternates_are_server_rendered()
+    {
+        $this->get('/en')
+            ->assertSee('<meta name="description" content="Birthday cakes made to order', false)
+            ->assertSee('<meta property="og:image" content="'.url('/images/og.jpg').'"', false)
+            ->assertSee('<link rel="canonical" href="'.url('/en').'"', false)
+            ->assertSee('<link rel="alternate" hreflang="id" href="'.url('/').'"', false);
+
+        $this->get('/pesan/kue')->assertRedirect('/pesan');
+        $this->get('/playground')->assertSee('<meta name="robots" content="noindex">', false);
+    }
+
     public function test_english_version_lives_under_en()
     {
         Order::factory()->create(['pickup_date' => '2026-10-31']);
