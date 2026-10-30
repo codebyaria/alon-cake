@@ -9,6 +9,7 @@ use App\Models\Size;
 use Database\Seeders\CatalogSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
@@ -36,9 +37,17 @@ class HomePageTest extends TestCase
                 ->has('cakes', 3)
                 ->where('cakes.0.name', 'Good things take time')
                 ->where('cakes.0.priceFrom', 285000)
+                ->where('cakes.0.photoUrl', fn (string $url) => str_ends_with($url, '/storage/cakes/good-things-take-time.webp'))
                 ->has('calendar.days', 14)
                 ->where('calendar.days.0.date', '2026-11-02')
                 ->where('calendar.days.6.status', 'day_off'));
+    }
+
+    public function test_seeded_menu_photos_are_published_to_the_public_disk()
+    {
+        foreach (['good-things-take-time', 'slow-mornings', 'small-joys'] as $slug) {
+            Storage::disk('public')->assertExists("cakes/{$slug}.webp");
+        }
     }
 
     public function test_english_version_lives_under_en()
@@ -52,7 +61,7 @@ class HomePageTest extends TestCase
                 ->component('home')
                 ->where('locale', 'en')
                 ->where('kitchenToday', 'Today in the kitchen: decorating 1 cake.')
-                ->where('cakes.0.flavorNote', 'Vanilla, milk cream')
+                ->where('cakes.0.decorNote', 'Wavy piping, handwriting')
                 ->where('translations.Pesan', 'Order'));
     }
 

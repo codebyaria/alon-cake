@@ -72,7 +72,7 @@ class OrderFlowTest extends TestCase
         $this->get('/pesan/bayar')->assertInertia(fn (Assert $page) => $page
             ->component('order/checkout')
             ->where('summary.cake', 'Slow mornings')
-            ->where('summary.cakePrice', 405000)
+            ->where('summary.cakePrice', 390000)
             ->where('summary.hasCard', true));
 
         $response = $this->post('/pesan/bayar', $checkout);
@@ -82,7 +82,7 @@ class OrderFlowTest extends TestCase
 
         $this->assertSame('2026-11-05', $order->pickup_date->toDateString());
         $this->assertSame(OrderStage::Recorded, $order->stage);
-        $this->assertSame(405000, $order->total);
+        $this->assertSame(390000, $order->total);
         $this->assertSame('081234567890', $order->customer_whatsapp);
         $this->assertSame('happy birthday, Sekar', $order->cake_text);
         $this->assertNotNull($order->paid_at);
@@ -113,7 +113,7 @@ class OrderFlowTest extends TestCase
         $order = Order::sole();
         $this->assertSame(Fulfillment::Delivery, $order->fulfillment);
         $this->assertSame(25000, $order->delivery_fee);
-        $this->assertSame(430000, $order->total);
+        $this->assertSame(415000, $order->total);
     }
 
     public function test_the_card_can_be_skipped()

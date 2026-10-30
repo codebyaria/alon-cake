@@ -89,6 +89,10 @@ export default function Home({
                     </a>
                 </div>
                 <PhotoFrame
+                    src="/images/hero-1100.webp"
+                    srcSet="/images/hero-600.webp 600w, /images/hero-1100.webp 1100w"
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    priority
                     alt={t(
                         'Kue krim dengan garis piping cokelat, di bawah cahaya pagi',
                     )}
@@ -156,6 +160,7 @@ export default function Home({
                                 >
                                     <PhotoFrame
                                         src={cake.photoUrl}
+                                        sizes="(min-width: 768px) 33vw, 100vw"
                                         alt={cake.name}
                                         placeholder={t('Foto kue')}
                                         className="aspect-[4/5] w-full"
@@ -167,7 +172,7 @@ export default function Home({
                                         {cake.description}
                                     </p>
                                     <p className="text-sm">
-                                        {cake.flavorNote} ·{' '}
+                                        {cake.decorNote} ·{' '}
                                         {t('mulai :price', {
                                             price: format.rupiah(
                                                 cake.priceFrom,
@@ -185,6 +190,9 @@ export default function Home({
             <section aria-labelledby="kartu-judul">
                 <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-28 md:grid-cols-2 md:gap-16 md:px-10 md:py-32">
                     <PhotoFrame
+                        src="/images/card-1100.webp"
+                        srcSet="/images/card-600.webp 600w, /images/card-1100.webp 1100w"
+                        sizes="(min-width: 768px) 50vw, 100vw"
                         alt={t('Kartu kecil bertulisan tangan di samping kue')}
                         placeholder={t(
                             'Foto: kartu kecil bertulisan tangan di samping kue',

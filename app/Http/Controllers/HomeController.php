@@ -27,9 +27,9 @@ class HomeController extends Controller
                 'slug' => $cake->slug,
                 'name' => $cake->name,
                 'description' => $cake->translate('description'),
-                'flavorNote' => $cake->translate('flavor_note'),
+                'decorNote' => $cake->translate('decor_note'),
                 'priceFrom' => $cake->base_price,
-                'photoUrl' => $cake->photo_path ? asset('storage/'.$cake->photo_path) : null,
+                'photoUrl' => $cake->photoUrl(),
             ]),
             'calendar' => [
                 'days' => $days->map(fn (DayAvailability $day) => $day->toArray()),

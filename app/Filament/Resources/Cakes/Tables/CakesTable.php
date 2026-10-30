@@ -24,7 +24,7 @@ class CakesTable
                 TextColumn::make('name')
                     ->label('Kue')
                     ->weight('medium')
-                    ->description(fn (Cake $record) => $record->translate('flavor_note'))
+                    ->description(fn (Cake $record) => $record->translate('decor_note'))
                     ->searchable(),
                 TextColumn::make('base_price')
                     ->label('Mulai dari')

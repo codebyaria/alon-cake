@@ -8,13 +8,14 @@ import { StepHeading } from '@/components/order/step-heading';
 import { PhotoFrame } from '@/components/site/photo-frame';
 import OrderLayout from '@/layouts/order-layout';
 import { localePath, useFormat, useLocale, useT } from '@/lib/i18n';
+import { cn } from '@/lib/utils';
 import type { OrderSummary } from '@/types/site';
 
 type Cake = {
     id: number;
     name: string;
     description: string;
-    flavorNote: string;
+    decorNote: string;
     priceFrom: number;
     photoUrl: string | null;
 };
@@ -68,14 +69,17 @@ export default function OrderCake({ summary, cakes, selected }: Props) {
                             src={cake.photoUrl}
                             alt=""
                             placeholder={t('Foto')}
-                            className="size-24 shrink-0 p-2 text-[11px]"
+                            className={cn(
+                                'size-24 shrink-0 text-[11px]',
+                                !cake.photoUrl && 'p-2',
+                            )}
                         />
                         <span className="flex flex-col gap-1.5">
                             <span className="font-display text-2xl leading-tight">
                                 {cake.name}
                             </span>
                             <span className="text-[13px] text-[#5C4134]">
-                                {cake.flavorNote}
+                                {cake.decorNote}
                             </span>
                             <span className="text-[13px]">
                                 {t('mulai :price', {

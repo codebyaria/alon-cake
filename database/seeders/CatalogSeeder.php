@@ -6,6 +6,7 @@ use App\Models\Cake;
 use App\Models\Flavor;
 use App\Models\Size;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * The menu: three cakes, three sizes, three flavors (wireframe "Order 2–3").
@@ -16,41 +17,45 @@ class CatalogSeeder extends Seeder
 {
     public function run(): void
     {
+        // Cakes differ by decoration; flavour is chosen separately in the order flow.
         $cakes = [
             [
                 'slug' => 'good-things-take-time',
                 'name' => 'Good things take time',
                 'description' => [
-                    'id' => 'Kue andalan kami. Krim polos, garis piping cokelat, dan tulisan tangan di atasnya.',
-                    'en' => 'Our signature cake. Plain cream, chocolate piping, and handwriting on top.',
+                    'id' => 'Kue andalan kami. Garis piping bergelombang di tepi atas dan tulisan tangan pilihanmu di tengahnya.',
+                    'en' => 'Our signature cake. A wavy piped border around the top and your own words handwritten in the middle.',
                 ],
-                'flavor_note' => ['id' => 'Vanila, krim susu', 'en' => 'Vanilla, milk cream'],
+                'decor_note' => ['id' => 'Piping gelombang, tulisan tangan', 'en' => 'Wavy piping, handwriting'],
                 'base_price' => 285000,
             ],
             [
                 'slug' => 'slow-mornings',
                 'name' => 'Slow mornings',
                 'description' => [
-                    'id' => 'Sponge cokelat yang lembap, ganache tipis, dan titik-titik kecil di tepinya.',
-                    'en' => 'Moist chocolate sponge, a thin ganache, and small dots around the edge.',
+                    'id' => 'Krim polos dengan lingkaran titik-titik cokelat kecil di tepinya. Tenang, seperti pagi tanpa terburu-buru.',
+                    'en' => 'Plain cream with a ring of small chocolate dots around the edge. Quiet, like a morning with no rush.',
                 ],
-                'flavor_note' => ['id' => 'Cokelat, ganache', 'en' => 'Chocolate, ganache'],
-                'base_price' => 315000,
+                'decor_note' => ['id' => 'Titik cokelat', 'en' => 'Chocolate dots'],
+                'base_price' => 300000,
             ],
             [
                 'slug' => 'small-joys',
                 'name' => 'Small joys',
                 'description' => [
-                    'id' => 'Segar dan ringan. Lemon curd di antara lapisan, hati kecil di atasnya.',
-                    'en' => 'Fresh and light. Lemon curd between the layers, a small heart on top.',
+                    'id' => 'Satu hati kecil berwarna dusty pink di atas, dan garis piping bergelombang di dasarnya.',
+                    'en' => 'One small dusty pink heart on top, and a wavy piped line around the base.',
                 ],
-                'flavor_note' => ['id' => 'Lemon, krim keju', 'en' => 'Lemon, cream cheese'],
-                'base_price' => 325000,
+                'decor_note' => ['id' => 'Hati kecil, piping di dasar', 'en' => 'Small heart, piped base'],
+                'base_price' => 300000,
             ],
         ];
 
         foreach ($cakes as $sort => $cake) {
-            Cake::updateOrCreate(['slug' => $cake['slug']], $cake + ['sort' => $sort]);
+            Cake::updateOrCreate(
+                ['slug' => $cake['slug']],
+                $cake + ['sort' => $sort, 'photo_path' => $this->publishPhoto($cake['slug'])],
+            );
         }
 
         $sizes = [
@@ -72,5 +77,22 @@ class CatalogSeeder extends Seeder
         foreach ($flavors as $sort => $flavor) {
             Flavor::updateOrCreate(['slug' => $flavor['slug']], $flavor + ['sort' => $sort]);
         }
+    }
+
+    /**
+     * Copy a bundled demo photo onto the public disk, where admin uploads live too.
+     */
+    private function publishPhoto(string $slug): ?string
+    {
+        $source = database_path("seeders/photos/{$slug}.webp");
+
+        if (! is_file($source)) {
+            return null;
+        }
+
+        $path = "cakes/{$slug}.webp";
+        Storage::disk('public')->put($path, file_get_contents($source));
+
+        return $path;
     }
 }

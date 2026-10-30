@@ -31,13 +31,13 @@ class CakeForm
                         TextInput::make('slug')
                             ->unique(ignoreRecord: true)
                             ->required(),
-                        TextInput::make('flavor_note.id')
-                            ->label('Rasa singkat (Indonesia)')
-                            ->placeholder('Vanila, krim susu')
+                        TextInput::make('decor_note.id')
+                            ->label('Hiasan singkat (Indonesia)')
+                            ->placeholder('Piping gelombang, tulisan tangan')
                             ->required(),
-                        TextInput::make('flavor_note.en')
-                            ->label('Rasa singkat (English)')
-                            ->placeholder('Vanilla, milk cream')
+                        TextInput::make('decor_note.en')
+                            ->label('Hiasan singkat (English)')
+                            ->placeholder('Wavy piping, handwriting')
                             ->required(),
                         Textarea::make('description.id')
                             ->label('Deskripsi (Indonesia)')

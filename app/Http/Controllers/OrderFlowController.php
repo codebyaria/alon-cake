@@ -92,9 +92,9 @@ class OrderFlowController extends Controller
                 'id' => $cake->id,
                 'name' => $cake->name,
                 'description' => $cake->translate('description'),
-                'flavorNote' => $cake->translate('flavor_note'),
+                'decorNote' => $cake->translate('decor_note'),
                 'priceFrom' => $cake->base_price,
-                'photoUrl' => $cake->photo_path ? asset('storage/'.$cake->photo_path) : null,
+                'photoUrl' => $cake->photoUrl(),
             ]),
             'selected' => $this->draft->all()['cake_id'] ?? null,
         ]);

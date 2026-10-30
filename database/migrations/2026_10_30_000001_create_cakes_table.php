@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             // Translatable copy: {"id": "...", "en": "..."}
             $table->json('description');
-            $table->json('flavor_note');
+            $table->json('decor_note');
             // Price for the smallest size, in rupiah. Sizes add their surcharge.
             $table->unsignedInteger('base_price');
             $table->string('photo_path')->nullable();

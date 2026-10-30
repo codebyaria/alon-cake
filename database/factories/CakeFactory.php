@@ -24,7 +24,7 @@ class CakeFactory extends Factory
             'slug' => Str::slug($name),
             'name' => $name,
             'description' => ['id' => fake()->sentence(), 'en' => fake()->sentence()],
-            'flavor_note' => ['id' => 'Vanila, krim susu', 'en' => 'Vanilla, milk cream'],
+            'decor_note' => ['id' => 'Piping gelombang, tulisan tangan', 'en' => 'Wavy piping, handwriting'],
             'base_price' => 300000,
             'is_active' => true,
             'sort' => 0,

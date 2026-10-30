@@ -21,6 +21,8 @@ export function SiteFooter() {
                     {t(
                         'Concept project oleh Ari Zain · Demo tanpa transaksi nyata',
                     )}
+                    <br />
+                    {t('Foto dibuat dengan AI untuk keperluan demo.')}
                 </p>
             </div>
         </footer>

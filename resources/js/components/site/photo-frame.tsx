@@ -2,6 +2,11 @@ import { cn } from '@/lib/utils';
 
 type PhotoFrameProps = {
     src?: string | null;
+    /** Responsive candidates, e.g. "/images/hero-600.webp 600w, /images/hero-1100.webp 1100w". */
+    srcSet?: string;
+    sizes?: string;
+    /** Above-the-fold photo: load eagerly and ask for it first (LCP). */
+    priority?: boolean;
     alt: string;
     /** What the still photo should show, displayed until a real photo is uploaded. */
     placeholder: string;
@@ -14,6 +19,9 @@ type PhotoFrameProps = {
  */
 export function PhotoFrame({
     src,
+    srcSet,
+    sizes,
+    priority = false,
     alt,
     placeholder,
     className,
@@ -22,8 +30,12 @@ export function PhotoFrame({
         return (
             <img
                 src={src}
+                srcSet={srcSet}
+                sizes={sizes}
                 alt={alt}
-                loading="lazy"
+                loading={priority ? 'eager' : 'lazy'}
+                fetchPriority={priority ? 'high' : 'auto'}
+                decoding="async"
                 className={cn('rounded-sm object-cover', className)}
             />
         );

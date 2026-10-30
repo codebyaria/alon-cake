@@ -21,7 +21,7 @@ export type MenuCake = {
     slug: string;
     name: string;
     description: string;
-    flavorNote: string;
+    decorNote: string;
     priceFrom: number;
     photoUrl: string | null;
 };

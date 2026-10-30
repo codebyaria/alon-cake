@@ -10,13 +10,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @property int $id
  * @property string $slug
  * @property string $name
  * @property array<string, string> $description
- * @property array<string, string> $flavor_note
+ * @property array<string, string> $decor_note
  * @property int $base_price
  * @property string|null $photo_path
  * @property bool $is_active
@@ -24,7 +25,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['slug', 'name', 'description', 'flavor_note', 'base_price', 'photo_path', 'is_active', 'sort'])]
+#[Fillable(['slug', 'name', 'description', 'decor_note', 'base_price', 'photo_path', 'is_active', 'sort'])]
 class Cake extends Model
 {
     /** @use HasFactory<CakeFactory> */
@@ -39,7 +40,7 @@ class Cake extends Model
     {
         return [
             'description' => 'array',
-            'flavor_note' => 'array',
+            'decor_note' => 'array',
             'base_price' => 'integer',
             'is_active' => 'boolean',
         ];
@@ -61,6 +62,14 @@ class Cake extends Model
     public function scopeOnMenu(Builder $query): void
     {
         $query->where('is_active', true)->orderBy('sort');
+    }
+
+    /**
+     * Public URL of the still photo uploaded in the admin, if any.
+     */
+    public function photoUrl(): ?string
+    {
+        return $this->photo_path ? Storage::disk('public')->url($this->photo_path) : null;
     }
 
     /**
